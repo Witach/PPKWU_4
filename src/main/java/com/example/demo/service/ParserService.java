@@ -18,9 +18,9 @@ public class ParserService {
         var targetStream = new ByteArrayInputStream(htmlContent.getBytes());
         var listOfServices = new LinkedList<ServiceDTO>();
         var tag = Jsoup.parse(targetStream, "UTF-8", "").body();
-        var companyCards = tag.select(".card:not(.container)");
+        var companyCards = tag.select("a[title=Zobacz informacje szczegółowe o firmie]");
         for (Element el: companyCards) {
-            var service = el.selectFirst("a.addax-cs_hl_hit_company_name_click");
+            var service = el;
             if(service == null) {
                 continue;
             }
