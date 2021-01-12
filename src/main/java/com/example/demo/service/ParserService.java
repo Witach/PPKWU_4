@@ -18,18 +18,29 @@ public class ParserService {
         var targetStream = new ByteArrayInputStream(htmlContent.getBytes());
         var listOfServices = new LinkedList<ServiceDTO>();
         var tag = Jsoup.parse(targetStream, "UTF-8", "").body();
-        var companyCards = tag.select("a[title=Zobacz informacje szczegółowe o firmie]");
-        for (Element el: companyCards) {
-            var service = el;
-            if(service == null) {
+        var companyItems = tag.select("li.company-item");
+
+        for (Element el: companyItems) {
+
+            var companyCard = el.select("a[title=Zobacz informacje szczegółowe o firmie]");
+            if(companyCard == null) {
                 continue;
             }
-            var name = service.attr("title");
-            var href = service.attr("href");
+
+            var name = companyCard.text();
+            var href = companyCard.attr("href");
+            var phone = el.select("a.icon-telephone").attr("title");
+            var email = el.select("a.icon-envelope").attr("data-company-email");
+            var address = el.select("div.address").text();
+
             var serviceDTO = ServiceDTO.builder()
                     .href(href)
                     .name(name)
+                    .phone(phone)
+                    .email(email)
+                    .address(address)
                     .build();
+
             listOfServices.add(serviceDTO);
         }
         return listOfServices;

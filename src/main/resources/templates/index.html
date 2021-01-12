@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta title="asdasde">
+</head>
+<body>
+    <form method="post" th:action="@{/ui/search}">
+        <label for="location">Location</label>
+        <input id="location" type="text" name="location">
+        <label for="type-of-service">Type of service</label>
+        <input id="type-of-service" type="text" name="type">
+        <input type="submit">Szukaj</input>
+    </form>
+    <div th:if="${ services != null }">
+        <tr th:each="service : ${services}">
+            <form method="post" th:action="@{/ui/vcard}" th:object="${service}">
+                <tr>
+                    <td>Nazwa:</td>
+<!--                    <td th:text="*{name}"></td>-->
+                    <td><input th:field="*{name}" type="hidden" /></td>
+                </tr>
+                <tr>
+                    <td>Telefon:</td>
+<!--                    <td th:text="*{href}" ></td>-->
+                    <td><input th:field="*{href}" type="hidden" /></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+<!--                    <td th:text="*{email}"></td>-->
+                    <td><input th:field="*{email}" type="hidden" /></td>
+                </tr>
+                <tr>
+                    <td>Link:</td>
+<!--                    <td th:text="*{address}"></td>-->
+                    <td><input th:field="*{address}" type="hidden" /></td>
+                </tr>
+                <tr>
+                    <td>Adres:</td>
+<!--                    <td th:text="*{phone}"></td>-->
+                    <td><input th:field="*{phone}" type="hidden" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit">Generuj vCard</button>
+                    </td>
+                </tr>
+            </form>
+        </tr>
+    </div>
+</body>
+</html>

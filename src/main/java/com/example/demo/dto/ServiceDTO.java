@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ServiceDTO {
-    String name;
-    String href;
+    public String name;
+    public String href;
+    public String email;
+    public String address;
+    public String phone;
 }
